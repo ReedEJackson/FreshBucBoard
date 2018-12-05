@@ -1,0 +1,403 @@
+﻿@using BucBoard.Models
+@model User
+
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    /* Set height of body and the document to 100% */
+    body {
+        height: 100%;
+        margin: 0;
+        font-family: Arial;
+    }
+
+    html {
+    }
+
+    .tablink {
+        background-color: #555;
+        color: white;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 25%;
+    }
+
+        /* Style tab links */
+        .tablink:hover {
+            background-color: #FFEDBD;
+            color: black;
+        }
+
+
+
+    /* Style the tab content (and add height:100% for full page content) */
+    .tabcontent {
+        color: white;
+        display: none;
+        padding: 100px 20px;
+        height: 100%;
+    }
+
+    #Profile {
+        background-color: #041E42;
+    }
+
+    #OfficeHours {
+        background-color: #041E42;
+    }
+
+    #Live {
+        background-color: #041E42;
+    }
+
+    #Alerts {
+        background-color: #041E42;
+    }
+
+    .buttonPress {
+        display: inline-block;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 2px #999;
+    }
+
+        .buttonPress:active {
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+    .text {
+        font-family: "Alfa Slab One", cursive;
+        display: block;
+        left: 0;
+        right: 0;
+        top: 20%;
+        width: 100%;
+        text-align: center;
+        perspective: 1000px;
+    }
+
+        .text h1 {
+            font-size: 8em;
+            color: #FFC72C;
+            letter-spacing: 0.0625em;
+            animation: drop-shadows;
+            animation-duration: 8s;
+            animation-iteration-count: infinite;
+            animation-fill-mode: both;
+        }
+
+    @@keyframes drop-shadows {
+        0% {
+            text-shadow: -1px 0 0 #041E42, 0px 0 0 #5b989a, 0px 0 0 #5d9b9d, 0px 0 0 #041E42;
+        }
+
+        25% {
+            text-shadow: -1px 0 0 #041E42, -2px 0 0 #041E42, -3px 0 0 #041E42, -4px 0 0 #041E42, -5px 0 0 #041E42, -6px 0 0 #041E42, -7px 0 0 #041E42, -8px 0 0 #041E42, -9px 0 0 #041E42, -10px 0 0 #041E42, -11px 0 0 #041E42, -12px 0 0 #041E42, -13px 0 0 #041E42, -14px 0 0 #041E42, -15px 0 0 #041E42, -16px 0 0 #041E42, -17px 0 0 #041E42, -18px 0 0 #041E42, -19px 0 0 #041E42, -20px 0 0 #041E42, -21px 0 0 #041E42, -22px 0 0 #041E42, -23px 0 0 #041E42, -24px 0 0 #041E42, -25px 0 0 #041E42, -26px 0 0 #041E42, -27px 0 0 #041E42, -28px 0 0 #041E42, -29px 0 0 #041E42, -30px 0 0 #041E42;
+            transform: rotateY(25deg);
+        }
+
+        75% {
+            text-shadow: -1px 0 0 #041E42, 2px 0 0 #041E42, 3px 0 0 #041E42, 4px 0 0 #041E42, 5px 0 0 #041E42, 6px 0 0 #041E42, 7px 0 0 #041E42, 8px 0 0 #041E42, 9px 0 0 #041E42, 10px 0 0 #041E42, 11px 0 0 #041E42, 12px 0 0 #041E42, 13px 0 0 #041E42, 14px 0 0 #041E42, 15px 0 0 #041E42, 16px 0 0 #041E42, 17px 0 0 #041E42, 18px 0 0 #041E42, 19px 0 0 #041E42, 20px 0 0 #041E42, 21px 0 0 #041E42, 22px 0 0 #041E42, 23px 0 0 #041E42, 24px 0 0 #041E42, 25px 0 0 #041E42, 26px 0 0 #041E42, 27px 0 0 #041E42, 28px 0 0 #041E42, 29px 0 0 #041E42, 30px 0 0 #041E42;
+            transform: rotateY(-25deg);
+        }
+
+        100% {
+            text-shadow: -1px 0 0 #041E42, 0px 0 0 #5b989a, 0px 0 0 #5d9b9d, 0px 0 0 #041E42;
+            transform: rotateY(0deg);
+        }
+    }
+
+    .control {
+        margin: 1rem 0;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #FFC72C;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #FFC72C;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+<img src="~/Images/LoginRegisterLogo.png" width="40%" height="40%" class="center-block" />
+
+<div style="background-color:#555">
+    <div class="text">
+        <h1>Dashboard</h1>
+    </div>
+</div>
+
+<hr />
+
+<button class="tablink" onclick="openPage('Live', this, '#041E42')" id="defaultOpen">Live Preview</button>
+<button class="tablink" onclick="openPage('OfficeHours', this, '#041E42')">Office Hours</button>
+<button class="tablink" onclick="openPage('Profile', this, '#041E42')">Profile</button>
+<button class="tablink" onclick="openPage('Alerts', this, '#041E42')">Alerts</button>
+<button class="tablink" onclick="openPage('Manage Users', this, '#041E42')">Manage Users</button>
+
+<div id="Live" class="tabcontent">
+    <div class="w3-container w3-center w3-animate-bottom">
+        <h3>Live Preview Tab</h3>
+        <iframe src="http://localhost:52351/Home/Index" height="700" width="1000"></iframe>
+    </div>
+</div>
+
+<div id="OfficeHours" class="tabcontent">
+    <div class="w3-container w3-center w3-animate-bottom">
+        <h3>Edit Office Hours</h3>
+        <br />
+        <div class="control">
+            <label for="appt-time">Monday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
+            <br />
+            <br />
+            <label for="appt-time">Tuesday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
+            <br />
+            <br />
+            <label for="appt-time">Wednesday:</label>&nbsp
+            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
+            <br />
+            <br />
+            <label for="appt-time">Thursday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp
+            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
+            <br />
+            <br />
+            <label for="appt-time">Friday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
+
+
+        </div>
+    </div>
+</div>
+
+<div id="Profile" class="tabcontent">
+    <div class="w3-container w3-center w3-animate-bottom">
+
+
+        <div class="container">
+            <h1>Edit Profile</h1>
+            <hr>
+            <div class="row">
+                <!-- left column -->
+                <div class="col-md-3">
+                    <div class="text-center">
+                        <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                        <h6>Upload photo...</h6>
+
+                        <input type="file" class="form-control">
+                    </div>
+                </div>
+
+                <!-- edit form column -->
+                <div class="col-md-9 personal-info">
+
+                    <h3>Personal info</h3>
+
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">First name:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" value="Jane">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Last name:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" value="Bishop">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Company:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Email:</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" type="text" value="janesemail@gmail.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Time Zone:</label>
+                            <div class="col-lg-8">
+                                <div class="ui-select">
+                                    <select id="user_time_zone" class="form-control">
+                                        <option value="Hawaii">(GMT-10:00) Hawaii</option>
+                                        <option value="Alaska">(GMT-09:00) Alaska</option>
+                                        <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+                                        <option value="Arizona">(GMT-07:00) Arizona</option>
+                                        <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
+                                        <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
+                                        <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
+                                        <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Username:</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="text" value="janeuser">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Password:</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="password" value="11111122333">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Confirm password:</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="password" value="11111122333">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"></label>
+                            <div class="col-md-8">
+                                <input type="button" class="btn btn-primary" value="Save Changes">
+                                <span></span>
+                                <input type="reset" class="btn btn-default" value="Cancel">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+
+<div id="Alerts" class="tabcontent">
+    <div class="w3-container w3-center w3-animate-bottom">
+        <h2>Choose Alert</h2>
+        <br />
+        <h3>Lunch Break: </h3>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+        <br />
+        <br />
+        <h3>Away From Office: </h3>
+        <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+        </label>
+        <br />
+
+    </div>
+</div>
+
+<div id="Manage Users" class="tabcontent">
+    <div class="w3-container w3-center w3-animate-bottom">
+        <h3>Manage Users</h3>
+        <br />
+        <!--List of users-->
+    </div>
+</div>
+
+<br />
+
+<div align="left">
+    <a href="@Url.Action("CustomRegister", "CustomLogin")" class="btn btn-warning">
+        <font color="black"><strong>Manage Users</strong></font>
+    </a>
+</div>
+
+<a href="@Url.Action("Index", "Home")">
+    <img src="~/Images/HomePageButton.png" width="20%" height="20%" class="buttonPress" align="right" />
+</a>
+
+@section Scripts{
+    <script>
+        function present() {
+            window.open("@Url.Action("Index", "Home")");
+            window.close("@Url.Action("Dashboard", "Dashboard")");
+        }
+    </script>
+    <script>
+        function openPage(pageName, elmnt, color) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+            document.getElementById(pageName).style.display = "block";
+            elmnt.style.backgroundColor = color;
+
+        }
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+    </script>
+}
