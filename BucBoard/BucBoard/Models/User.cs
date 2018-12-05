@@ -18,6 +18,7 @@ namespace BucBoard.Models
         public User()
         {
             this.Calendars = new HashSet<Calendar>();
+            this.Alerts = new HashSet<Alert>();
         }
     
         public int userID { get; set; }
@@ -32,5 +33,7 @@ namespace BucBoard.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Calendar> Calendars { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Alert> Alerts { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@using BucBoard.Models
-@model User
+@model User, UserListModel
 
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -13,6 +13,9 @@
         height: 100%;
         margin: 0;
         font-family: Arial;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     html {
@@ -25,9 +28,9 @@
         border: none;
         outline: none;
         cursor: pointer;
-        padding: 14px 16px;
+        padding: 15px 15px;
         font-size: 17px;
-        width: 25%;
+        width: 20%;
     }
 
         /* Style tab links */
@@ -42,7 +45,7 @@
     .tabcontent {
         color: white;
         display: none;
-        padding: 100px 20px;
+        padding: 80px 20px;
         height: 100%;
     }
 
@@ -202,7 +205,7 @@
 <div id="Live" class="tabcontent">
     <div class="w3-container w3-center w3-animate-bottom">
         <h3>Live Preview Tab</h3>
-        <iframe src="http://localhost:52351/Home/Index" height="700" width="1000"></iframe>
+        <iframe src="@Url.Action("Index", "Home")" height="700" width="1000"></iframe>
     </div>
 </div>
 
@@ -365,15 +368,11 @@
 
 <br />
 
-<div align="left">
-    <a href="@Url.Action("CustomRegister", "CustomLogin")" class="btn btn-warning">
-        <font color="black"><strong>Manage Users</strong></font>
+<div>
+    <a onclick="present()">
+        <img src="~/Images/HomePageButton.png" width="20%" height="20%" class="buttonPress" align="right" />
     </a>
 </div>
-
-<a href="@Url.Action("Index", "Home")">
-    <img src="~/Images/HomePageButton.png" width="20%" height="20%" class="buttonPress" align="right" />
-</a>
 
 @section Scripts{
     <script>

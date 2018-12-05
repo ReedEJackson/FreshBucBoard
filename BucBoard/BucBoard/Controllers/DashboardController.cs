@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BucBoard.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,15 @@ namespace BucBoard.Controllers
         // GET: Dashboard
         public ActionResult Dashboard()
         {
-            return View();
+            UserListModel userList = new UserListModel();
+            using (bucboardEntities db = new bucboardEntities())
+            {
+                foreach (var teacher in db.Users)
+                {
+                    userList.Teachers.Add(teacher);
+                }
+            }
+            return View(userList);
         }
     }
 }

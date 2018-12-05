@@ -12,11 +12,13 @@ namespace BucBoard.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Premade
+    public partial class Alert
     {
-        public Nullable<int> eventType { get; set; }
-        public int eventID { get; set; }
+        public int alertID { get; set; }
+        public string alertName { get; set; }
+        public Nullable<int> isOn { get; set; }
+        public Nullable<int> userID { get; set; }
     
-        public virtual Event Event { get; set; }
+        public virtual User User { get; set; }
     }
 }

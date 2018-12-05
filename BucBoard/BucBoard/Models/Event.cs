@@ -28,10 +28,7 @@ namespace BucBoard.Models
         public Nullable<int> calendarID { get; set; }
     
         public virtual Calendar Calendar { get; set; }
-        public virtual CustomEvent CustomEvent { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> Messages { get; set; }
-        public virtual Premade Premade { get; set; }
-        public virtual Recurring Recurring { get; set; }
     }
 }

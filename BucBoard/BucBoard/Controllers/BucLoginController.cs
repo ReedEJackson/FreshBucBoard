@@ -33,6 +33,7 @@ namespace BucBoard.Controllers
                 using (bucboardEntities db = new bucboardEntities())
                 {
                     db.Users.Add(bucUser);
+                    //db.Calendars.Add();
                     db.SaveChanges();
                 }
                 ModelState.Clear();

@@ -4,7 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="bucboardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="bucboardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Alerts">
+          <Key>
+            <PropertyRef Name="alertID" />
+          </Key>
+          <Property Name="alertID" Type="int" Nullable="false" />
+          <Property Name="alertName" Type="varchar" MaxLength="50" />
+          <Property Name="isOn" Type="int" />
+          <Property Name="userID" Type="int" />
+        </EntityType>
         <EntityType Name="Calendar">
           <Key>
             <PropertyRef Name="calendarID" />
@@ -12,14 +21,6 @@
           <Property Name="calendarID" Type="int" Nullable="false" />
           <Property Name="month" Type="varchar" MaxLength="50" />
           <Property Name="userID" Type="int" />
-        </EntityType>
-        <EntityType Name="CustomEvents">
-          <Key>
-            <PropertyRef Name="eventID" />
-          </Key>
-          <Property Name="isAvalible" Type="int" />
-          <Property Name="eventType" Type="int" />
-          <Property Name="eventID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Events">
           <Key>
@@ -44,20 +45,6 @@
           <Property Name="date" Type="date" />
           <Property Name="eventID" Type="int" />
         </EntityType>
-        <EntityType Name="Premade">
-          <Key>
-            <PropertyRef Name="eventID" />
-          </Key>
-          <Property Name="eventType" Type="int" />
-          <Property Name="eventID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Recurring">
-          <Key>
-            <PropertyRef Name="eventID" />
-          </Key>
-          <Property Name="isAvalible" Type="int" />
-          <Property Name="eventID" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="userID" />
@@ -72,7 +59,19 @@
           <Property Name="password" Type="varchar" MaxLength="50" />
           <Property Name="confirmPassword" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK__Calendar__userID__58D1301D">
+        <Association Name="FK__Alerts__userID__72910220">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Alerts" Type="Self.Alerts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Alerts">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Calendar__userID__6CD828CA">
           <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
           <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
           <ReferentialConstraint>
@@ -84,19 +83,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomEve__event__6442E2C9">
-          <End Role="Events" Type="Self.Events" Multiplicity="1" />
-          <End Role="CustomEvents" Type="Self.CustomEvents" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Events">
-              <PropertyRef Name="eventID" />
-            </Principal>
-            <Dependent Role="CustomEvents">
-              <PropertyRef Name="eventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Events__calendar__5BAD9CC8">
+        <Association Name="FK__Events__calendar__6FB49575">
           <End Role="Calendar" Type="Self.Calendar" Multiplicity="0..1" />
           <End Role="Events" Type="Self.Events" Multiplicity="*" />
           <ReferentialConstraint>
@@ -108,7 +95,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__eventI__671F4F74">
+        <Association Name="FK__Messages__eventI__756D6ECB">
           <End Role="Events" Type="Self.Events" Multiplicity="0..1" />
           <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
           <ReferentialConstraint>
@@ -120,65 +107,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Premade__eventID__6166761E">
-          <End Role="Events" Type="Self.Events" Multiplicity="1" />
-          <End Role="Premade" Type="Self.Premade" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Events">
-              <PropertyRef Name="eventID" />
-            </Principal>
-            <Dependent Role="Premade">
-              <PropertyRef Name="eventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Recurring__event__5E8A0973">
-          <End Role="Events" Type="Self.Events" Multiplicity="1" />
-          <End Role="Recurring" Type="Self.Recurring" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Events">
-              <PropertyRef Name="eventID" />
-            </Principal>
-            <Dependent Role="Recurring">
-              <PropertyRef Name="eventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="bucboardModelStoreContainer">
+          <EntitySet Name="Alerts" EntityType="Self.Alerts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Calendar" EntityType="Self.Calendar" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CustomEvents" EntityType="Self.CustomEvents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Premade" EntityType="Self.Premade" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Recurring" EntityType="Self.Recurring" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Calendar__userID__58D1301D" Association="Self.FK__Calendar__userID__58D1301D">
+          <AssociationSet Name="FK__Alerts__userID__72910220" Association="Self.FK__Alerts__userID__72910220">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Alerts" EntitySet="Alerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Calendar__userID__6CD828CA" Association="Self.FK__Calendar__userID__6CD828CA">
             <End Role="Users" EntitySet="Users" />
             <End Role="Calendar" EntitySet="Calendar" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomEve__event__6442E2C9" Association="Self.FK__CustomEve__event__6442E2C9">
-            <End Role="Events" EntitySet="Events" />
-            <End Role="CustomEvents" EntitySet="CustomEvents" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Events__calendar__5BAD9CC8" Association="Self.FK__Events__calendar__5BAD9CC8">
+          <AssociationSet Name="FK__Events__calendar__6FB49575" Association="Self.FK__Events__calendar__6FB49575">
             <End Role="Calendar" EntitySet="Calendar" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
-          <AssociationSet Name="FK__Messages__eventI__671F4F74" Association="Self.FK__Messages__eventI__671F4F74">
+          <AssociationSet Name="FK__Messages__eventI__756D6ECB" Association="Self.FK__Messages__eventI__756D6ECB">
             <End Role="Events" EntitySet="Events" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Premade__eventID__6166761E" Association="Self.FK__Premade__eventID__6166761E">
-            <End Role="Events" EntitySet="Events" />
-            <End Role="Premade" EntitySet="Premade" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Recurring__event__5E8A0973" Association="Self.FK__Recurring__event__5E8A0973">
-            <End Role="Events" EntitySet="Events" />
-            <End Role="Recurring" EntitySet="Recurring" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bucboardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -192,15 +144,6 @@
           <NavigationProperty Name="User" Relationship="Self.FK__Calendar__userID__58D1301D" FromRole="Calendar" ToRole="Users" />
           <NavigationProperty Name="Events" Relationship="Self.FK__Events__calendar__5BAD9CC8" FromRole="Calendar" ToRole="Events" />
         </EntityType>
-        <EntityType Name="CustomEvent">
-          <Key>
-            <PropertyRef Name="eventID" />
-          </Key>
-          <Property Name="isAvalible" Type="Int32" />
-          <Property Name="eventType" Type="Int32" />
-          <Property Name="eventID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK__CustomEve__event__6442E2C9" FromRole="CustomEvents" ToRole="Events" />
-        </EntityType>
         <EntityType Name="Event">
           <Key>
             <PropertyRef Name="eventID" />
@@ -212,10 +155,7 @@
           <Property Name="endTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="calendarID" Type="Int32" />
           <NavigationProperty Name="Calendar" Relationship="Self.FK__Events__calendar__5BAD9CC8" FromRole="Events" ToRole="Calendar" />
-          <NavigationProperty Name="CustomEvent" Relationship="Self.FK__CustomEve__event__6442E2C9" FromRole="Events" ToRole="CustomEvents" />
           <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__eventI__671F4F74" FromRole="Events" ToRole="Messages" />
-          <NavigationProperty Name="Premade" Relationship="Self.FK__Premade__eventID__6166761E" FromRole="Events" ToRole="Premade" />
-          <NavigationProperty Name="Recurring" Relationship="Self.FK__Recurring__event__5E8A0973" FromRole="Events" ToRole="Recurring" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -229,22 +169,6 @@
           <Property Name="date" Type="DateTime" Precision="0" />
           <Property Name="eventID" Type="Int32" />
           <NavigationProperty Name="Event" Relationship="Self.FK__Messages__eventI__671F4F74" FromRole="Messages" ToRole="Events" />
-        </EntityType>
-        <EntityType Name="Premade">
-          <Key>
-            <PropertyRef Name="eventID" />
-          </Key>
-          <Property Name="eventType" Type="Int32" />
-          <Property Name="eventID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK__Premade__eventID__6166761E" FromRole="Premade" ToRole="Events" />
-        </EntityType>
-        <EntityType Name="Recurring">
-          <Key>
-            <PropertyRef Name="eventID" />
-          </Key>
-          <Property Name="isAvalible" Type="Int32" />
-          <Property Name="eventID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Event" Relationship="Self.FK__Recurring__event__5E8A0973" FromRole="Recurring" ToRole="Events" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -260,6 +184,7 @@
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="confirmPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Calendars" Relationship="Self.FK__Calendar__userID__58D1301D" FromRole="Users" ToRole="Calendar" />
+          <NavigationProperty Name="Alerts" Relationship="bucboardModel.FK__Alerts__userID__72910220" FromRole="User" ToRole="Alert" />
         </EntityType>
         <Association Name="FK__Calendar__userID__58D1301D">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
@@ -285,18 +210,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CustomEve__event__6442E2C9">
-          <End Role="Events" Type="Self.Event" Multiplicity="1" />
-          <End Role="CustomEvents" Type="Self.CustomEvent" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Events">
-              <PropertyRef Name="eventID" />
-            </Principal>
-            <Dependent Role="CustomEvents">
-              <PropertyRef Name="eventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Messages__eventI__671F4F74">
           <End Role="Events" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
@@ -309,37 +222,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Premade__eventID__6166761E">
-          <End Role="Events" Type="Self.Event" Multiplicity="1" />
-          <End Role="Premade" Type="Self.Premade" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Events">
-              <PropertyRef Name="eventID" />
-            </Principal>
-            <Dependent Role="Premade">
-              <PropertyRef Name="eventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Recurring__event__5E8A0973">
-          <End Role="Events" Type="Self.Event" Multiplicity="1" />
-          <End Role="Recurring" Type="Self.Recurring" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Events">
-              <PropertyRef Name="eventID" />
-            </Principal>
-            <Dependent Role="Recurring">
-              <PropertyRef Name="eventID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="bucboardEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Calendars" EntityType="Self.Calendar" />
-          <EntitySet Name="CustomEvents" EntityType="Self.CustomEvent" />
           <EntitySet Name="Events" EntityType="Self.Event" />
           <EntitySet Name="Messages" EntityType="Self.Message" />
-          <EntitySet Name="Premades" EntityType="Self.Premade" />
-          <EntitySet Name="Recurrings" EntityType="Self.Recurring" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <AssociationSet Name="FK__Calendar__userID__58D1301D" Association="Self.FK__Calendar__userID__58D1301D">
             <End Role="Users" EntitySet="Users" />
@@ -349,23 +235,38 @@
             <End Role="Calendar" EntitySet="Calendars" />
             <End Role="Events" EntitySet="Events" />
           </AssociationSet>
-          <AssociationSet Name="FK__CustomEve__event__6442E2C9" Association="Self.FK__CustomEve__event__6442E2C9">
-            <End Role="Events" EntitySet="Events" />
-            <End Role="CustomEvents" EntitySet="CustomEvents" />
-          </AssociationSet>
           <AssociationSet Name="FK__Messages__eventI__671F4F74" Association="Self.FK__Messages__eventI__671F4F74">
             <End Role="Events" EntitySet="Events" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
-          <AssociationSet Name="FK__Premade__eventID__6166761E" Association="Self.FK__Premade__eventID__6166761E">
-            <End Role="Events" EntitySet="Events" />
-            <End Role="Premade" EntitySet="Premades" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Recurring__event__5E8A0973" Association="Self.FK__Recurring__event__5E8A0973">
-            <End Role="Events" EntitySet="Events" />
-            <End Role="Recurring" EntitySet="Recurrings" />
+          <EntitySet Name="Alerts" EntityType="bucboardModel.Alert" />
+          <AssociationSet Name="FK__Alerts__userID__72910220" Association="bucboardModel.FK__Alerts__userID__72910220">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Alert" EntitySet="Alerts" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Alert">
+          <Key>
+            <PropertyRef Name="alertID" />
+          </Key>
+          <Property Name="alertID" Type="Int32" Nullable="false" />
+          <Property Name="alertName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isOn" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="bucboardModel.FK__Alerts__userID__72910220" FromRole="Alert" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__Alerts__userID__72910220">
+          <End Type="bucboardModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="bucboardModel.Alert" Role="Alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Alert">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -378,15 +279,6 @@
                 <ScalarProperty Name="calendarID" ColumnName="calendarID" />
                 <ScalarProperty Name="month" ColumnName="month" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomEvents">
-            <EntityTypeMapping TypeName="bucboardModel.CustomEvent">
-              <MappingFragment StoreEntitySet="CustomEvents">
-                <ScalarProperty Name="isAvalible" ColumnName="isAvalible" />
-                <ScalarProperty Name="eventType" ColumnName="eventType" />
-                <ScalarProperty Name="eventID" ColumnName="eventID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -415,22 +307,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Premades">
-            <EntityTypeMapping TypeName="bucboardModel.Premade">
-              <MappingFragment StoreEntitySet="Premade">
-                <ScalarProperty Name="eventType" ColumnName="eventType" />
-                <ScalarProperty Name="eventID" ColumnName="eventID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Recurrings">
-            <EntityTypeMapping TypeName="bucboardModel.Recurring">
-              <MappingFragment StoreEntitySet="Recurring">
-                <ScalarProperty Name="isAvalible" ColumnName="isAvalible" />
-                <ScalarProperty Name="eventID" ColumnName="eventID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="bucboardModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -443,6 +319,16 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="confirmPassword" ColumnName="confirmPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Alerts">
+            <EntityTypeMapping TypeName="bucboardModel.Alert">
+              <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="isOn" ColumnName="isOn" />
+                <ScalarProperty Name="alertName" ColumnName="alertName" />
+                <ScalarProperty Name="alertID" ColumnName="alertID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

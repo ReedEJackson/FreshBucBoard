@@ -5,19 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="9ebb68bed4704c10a0ac612baeba69b2" Name="Diagram1">
-        <EntityTypeShape EntityType="bucboardModel.Calendar" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.CustomEvent" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.Event" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.Message" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.Premade" Width="1.5" PointX="7.5" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.Recurring" Width="1.5" PointX="7.5" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.User" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.Calendar" Width="1.5" PointX="3.125" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.Event" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.Message" Width="1.5" PointX="7.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.User" Width="1.5" PointX="0.875" PointY="2.625" IsExpanded="true" />
         <AssociationConnector Association="bucboardModel.FK__Calendar__userID__58D1301D" ManuallyRouted="false" />
         <AssociationConnector Association="bucboardModel.FK__Events__calendar__5BAD9CC8" ManuallyRouted="false" />
-        <AssociationConnector Association="bucboardModel.FK__CustomEve__event__6442E2C9" ManuallyRouted="false" />
         <AssociationConnector Association="bucboardModel.FK__Messages__eventI__671F4F74" ManuallyRouted="false" />
-        <AssociationConnector Association="bucboardModel.FK__Premade__eventID__6166761E" ManuallyRouted="false" />
-        <AssociationConnector Association="bucboardModel.FK__Recurring__event__5E8A0973" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="bucboardModel.Alert" Width="1.5" PointX="3" PointY="8.25" />
+        <AssociationConnector Association="bucboardModel.FK__Alerts__userID__72910220" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

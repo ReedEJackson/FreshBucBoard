@@ -26,11 +26,9 @@ namespace BucBoard.Models
         }
     
         public virtual DbSet<Calendar> Calendars { get; set; }
-        public virtual DbSet<CustomEvent> CustomEvents { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
-        public virtual DbSet<Premade> Premades { get; set; }
-        public virtual DbSet<Recurring> Recurrings { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Alert> Alerts { get; set; }
     }
 }

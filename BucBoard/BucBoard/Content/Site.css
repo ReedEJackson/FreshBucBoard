@@ -5,26 +5,21 @@
 
 html {
     height: 100%;
-    
-    
 }
 
 body {
     padding-top: 50px;
     height: 100%;
     background-image: linear-gradient(to bottom right, #041E42, #FFC72C);
-    color: whitesmoke;
     background-size: auto;
+    color: whitesmoke;
     width: auto;
-   
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-   
-   
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 

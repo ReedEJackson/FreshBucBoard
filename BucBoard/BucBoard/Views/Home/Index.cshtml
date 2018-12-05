@@ -1,4 +1,7 @@
-﻿@{
+﻿@using BucBoard.Models
+@model Event
+
+@{
     ViewBag.Title = "BucBoard";
 }
 
@@ -13,6 +16,7 @@
 
     body {
         font-family: Verdana, sans-serif;
+        overflow-x: hidden;
     }
 
     .shiny {
@@ -28,7 +32,7 @@
         text-transform: uppercase;
     }
 
-    .shiny::before {
+        .shiny::before {
             background-position: -180px;
             -webkit-animation: flare 5s infinite;
             -webkit-animation-timing-function: linear;
@@ -42,7 +46,7 @@
             position: absolute;
         }
 
-    .shiny::after {
+        .shiny::after {
             content: "BucBoard";
             color: #FFF;
             display: block;
@@ -124,7 +128,7 @@
         box-shadow: 0 5px #999;
     }
 
-    .buttonPress:active {
+        .buttonPress:active {
             box-shadow: 0 5px #666;
             transform: translateY(4px);
         }
@@ -134,6 +138,13 @@
 <span class="shiny">
     <span class="inner-shiny">BucBoard</span>
 </span>
+
+<!--Alerts-->
+@*@Html.Label("Alert");
+@Html.DisplayFor(m => m.eventID)*@
+
+<!--Calender-->
+
 
 <!--Buttons for navigating -->
 <div style="text-align: center;">
