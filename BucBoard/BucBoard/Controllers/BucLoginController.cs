@@ -54,6 +54,7 @@ namespace BucBoard.Controllers
                 if (bucUsr != null)
                 {
                     Session["userID"] = bucUsr.userID.ToString();
+                    Session["userIDNum"] = bucUsr.userID;
                     Session["email"] = bucUsr.email.ToString();
                     return RedirectToAction("BucLoggedIn");
                 }
@@ -70,7 +71,7 @@ namespace BucBoard.Controllers
             if (Session["userID"] != null)
             {
                 BucGlobal.BucLoggedIn = true;
-                BucGlobal.BucOffDashboard = false;
+                BucGlobal.BucCurrentUser = (int)Session["userIDNum"];
                 return RedirectToAction("Dashboard", "Dashboard");
             }
             else
@@ -85,6 +86,7 @@ namespace BucBoard.Controllers
         {
             //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             BucGlobal.BucLoggedIn = false;
+            BucGlobal.BucCurrentUser = -1;
             return RedirectToAction("CustomLogin", "CustomLogin");
         }
 

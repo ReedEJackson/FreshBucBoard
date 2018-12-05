@@ -8,6 +8,6 @@ namespace BucBoard
     public class BucGlobal
     {
         public static bool BucLoggedIn { get; set; }
-        public static bool BucOffDashboard { get; set; }
+        public static int BucCurrentUser { get; set; }
     }
 }

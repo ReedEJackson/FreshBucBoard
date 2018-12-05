@@ -11,5 +11,10 @@ namespace BucBoard.Models
         public User MyUser { get; set; }
         public Calendar MyCalendar { get; set; }
         public Event MyEvent { get; set; }
+
+        public MultipleModelPass()
+        {
+
+        }
     }
 }

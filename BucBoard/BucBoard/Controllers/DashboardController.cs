@@ -12,15 +12,52 @@ namespace BucBoard.Controllers
         // GET: Dashboard
         public ActionResult Dashboard()
         {
+            MultipleModelPass model = new MultipleModelPass();
             UserListModel userList = new UserListModel();
+            User tempUser = new Models.User();
             using (bucboardEntities db = new bucboardEntities())
             {
-                foreach (var teacher in db.Users)
+                //Get user model
+                tempUser = CreateUser(BucGlobal.BucCurrentUser);
+                model.MyUser = tempUser;
+
+                //Get list of users 
+                var allUsers = db.Users.ToArray();
+                for (int i = 0; i < allUsers.Count(); i++)
                 {
-                    userList.Teachers.Add(teacher);
+                    tempUser = CreateUser(allUsers[0].userID);
+                    userList.Teachers.Add(tempUser);
                 }
+                model.MyUserListModel = userList;
             }
-            return View(userList);
+            ViewData["CurrentUser"] = model.MyUser;
+            return View(model);
+        }
+
+        //Create user object from its ID
+        public User CreateUser(int userId)
+        {
+            using (var db = new bucboardEntities())
+            {
+                var user = db.Users.SingleOrDefault(x => x.userID == userId);
+                if (user != null)
+                {
+                    //Map user properties
+                    return new User
+                    {
+                        userID = user.userID,
+                        firstName = user.firstName,
+                        lastName = user.lastName,
+                        officeNumber = user.officeNumber,
+                        department = user.department,
+                        isAdmin = user.isAdmin,
+                        email = user.email,
+                        password = user.password,
+                        confirmPassword = user.confirmPassword,
+                    };
+                }
+                return null;
+            }
         }
     }
 }

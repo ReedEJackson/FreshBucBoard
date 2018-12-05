@@ -11,10 +11,11 @@ namespace BucBoard.Models
 
         public UserListModel()
         {
-
+            Teachers = new List<User>();
         }
         public UserListModel(List<User> inputList)
         {
+            Teachers = new List<User>();
             Teachers.AddRange(inputList);
         }
     }

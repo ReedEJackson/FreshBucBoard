@@ -210,8 +210,10 @@
     <Content Include="Images\ETSULogo.png" />
     <Content Include="Images\HomePageButton.png" />
     <Content Include="Images\LoginRegisterLogo.png" />
+    <Content Include="Images\ManageUsers.png" />
     <Content Include="Images\newAppLogo2.png" />
     <Content Include="Images\newMailLogo2.png" />
+    <Content Include="Images\Present.png" />
     <Content Include="Models\BucBoardDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BucBoardDB.Context.cs</LastGenOutput>

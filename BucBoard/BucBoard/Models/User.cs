@@ -35,5 +35,19 @@ namespace BucBoard.Models
         public virtual ICollection<Calendar> Calendars { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Alert> Alerts { get; set; }
+
+        //public User(int id, string first, string last, int officeNum, string dept, int admin, 
+        //            string mail, string pass, string confirm)
+        //{
+        //    userID = id;
+        //    firstName = first;
+        //    lastName = last;
+        //    officeNumber = officeNum;
+        //    department = dept;
+        //    isAdmin = admin;
+        //    email = mail;
+        //    password = pass;
+        //    confirm = confirmPassword;
+        //}
     }
 }
