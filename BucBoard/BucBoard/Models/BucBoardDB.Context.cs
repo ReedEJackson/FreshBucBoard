@@ -25,10 +25,11 @@ namespace BucBoard.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Alert> Alerts { get; set; }
         public virtual DbSet<Calendar> Calendars { get; set; }
         public virtual DbSet<Event> Events { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<OfficeHour> OfficeHours { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Alert> Alerts { get; set; }
     }
 }

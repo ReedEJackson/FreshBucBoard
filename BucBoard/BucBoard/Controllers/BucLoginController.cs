@@ -33,7 +33,8 @@ namespace BucBoard.Controllers
                 using (bucboardEntities db = new bucboardEntities())
                 {
                     db.Users.Add(bucUser);
-                    //db.Calendars.Add();
+                    Calendar schedule = new Calendar();
+                    db.Calendars.Add(schedule);
                     db.SaveChanges();
                 }
                 ModelState.Clear();
@@ -48,6 +49,7 @@ namespace BucBoard.Controllers
         public ActionResult BucLogin(User bucUser)
         {
             BucGlobal.BucLoggedIn = false;
+            BucGlobal.BucCurrentUser = -1;
             using (bucboardEntities db = new bucboardEntities())
             {
                 var bucUsr = db.Users.Where(u => u.email == bucUser.email && u.password == bucUser.password).FirstOrDefault();
@@ -78,16 +80,6 @@ namespace BucBoard.Controllers
             {
                 return RedirectToAction("BucLogin");
             }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult BucLogOff()
-        {
-            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            BucGlobal.BucLoggedIn = false;
-            BucGlobal.BucCurrentUser = -1;
-            return RedirectToAction("CustomLogin", "CustomLogin");
         }
 
         private string HashPassword(string pass)

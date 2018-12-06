@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="bucboardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="bucboardModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Alerts">
           <Key>
             <PropertyRef Name="alertID" />
@@ -44,6 +44,19 @@
           <Property Name="subject" Type="varchar" MaxLength="50" />
           <Property Name="date" Type="date" />
           <Property Name="eventID" Type="int" />
+        </EntityType>
+        <EntityType Name="OfficeHours">
+          <Key>
+            <PropertyRef Name="officeHoursID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="officeHoursID" Type="int" Nullable="false" />
+          <Property Name="startingHours" Type="int" />
+          <Property Name="startingMinutes" Type="int" />
+          <Property Name="endingHours" Type="int" />
+          <Property Name="endingMinutes" Type="int" />
+          <Property Name="day" Type="varchar" MaxLength="50" />
+          <Property Name="userID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -107,11 +120,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__OfficeHou__userI__01D345B0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OfficeHours" Type="Self.OfficeHours" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="OfficeHours">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="bucboardModelStoreContainer">
           <EntitySet Name="Alerts" EntityType="Self.Alerts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Calendar" EntityType="Self.Calendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OfficeHours" EntityType="Self.OfficeHours" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Alerts__userID__72910220" Association="Self.FK__Alerts__userID__72910220">
             <End Role="Users" EntitySet="Users" />
@@ -129,11 +155,26 @@
             <End Role="Events" EntitySet="Events" />
             <End Role="Messages" EntitySet="Messages" />
           </AssociationSet>
+          <AssociationSet Name="FK__OfficeHou__userI__01D345B0" Association="Self.FK__OfficeHou__userI__01D345B0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OfficeHours" EntitySet="OfficeHours" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="bucboardModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Alert">
+          <Key>
+            <PropertyRef Name="alertID" />
+          </Key>
+          <Property Name="alertID" Type="Int32" Nullable="false" />
+          <Property Name="alertName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isOn" Type="Int32" />
+          <Property Name="userID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Alerts__userID__72910220" FromRole="Alerts" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Calendar">
           <Key>
             <PropertyRef Name="calendarID" />
@@ -141,8 +182,8 @@
           <Property Name="calendarID" Type="Int32" Nullable="false" />
           <Property Name="month" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="userID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FK__Calendar__userID__58D1301D" FromRole="Calendar" ToRole="Users" />
-          <NavigationProperty Name="Events" Relationship="Self.FK__Events__calendar__5BAD9CC8" FromRole="Calendar" ToRole="Events" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Calendar__userID__6CD828CA" FromRole="Calendar" ToRole="Users" />
+          <NavigationProperty Name="Events" Relationship="Self.FK__Events__calendar__6FB49575" FromRole="Calendar" ToRole="Events" />
         </EntityType>
         <EntityType Name="Event">
           <Key>
@@ -154,8 +195,8 @@
           <Property Name="startTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="endTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="calendarID" Type="Int32" />
-          <NavigationProperty Name="Calendar" Relationship="Self.FK__Events__calendar__5BAD9CC8" FromRole="Events" ToRole="Calendar" />
-          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__eventI__671F4F74" FromRole="Events" ToRole="Messages" />
+          <NavigationProperty Name="Calendar" Relationship="Self.FK__Events__calendar__6FB49575" FromRole="Events" ToRole="Calendar" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK__Messages__eventI__756D6ECB" FromRole="Events" ToRole="Messages" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -168,7 +209,21 @@
           <Property Name="subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="date" Type="DateTime" Precision="0" />
           <Property Name="eventID" Type="Int32" />
-          <NavigationProperty Name="Event" Relationship="Self.FK__Messages__eventI__671F4F74" FromRole="Messages" ToRole="Events" />
+          <NavigationProperty Name="Event" Relationship="Self.FK__Messages__eventI__756D6ECB" FromRole="Messages" ToRole="Events" />
+        </EntityType>
+        <EntityType Name="OfficeHour">
+          <Key>
+            <PropertyRef Name="officeHoursID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="officeHoursID" Type="Int32" Nullable="false" />
+          <Property Name="startingHours" Type="Int32" />
+          <Property Name="startingMinutes" Type="Int32" />
+          <Property Name="endingHours" Type="Int32" />
+          <Property Name="endingMinutes" Type="Int32" />
+          <Property Name="day" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__OfficeHou__userI__01D345B0" FromRole="OfficeHours" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -183,10 +238,23 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="confirmPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Calendars" Relationship="Self.FK__Calendar__userID__58D1301D" FromRole="Users" ToRole="Calendar" />
-          <NavigationProperty Name="Alerts" Relationship="bucboardModel.FK__Alerts__userID__72910220" FromRole="User" ToRole="Alert" />
+          <NavigationProperty Name="Alerts" Relationship="Self.FK__Alerts__userID__72910220" FromRole="Users" ToRole="Alerts" />
+          <NavigationProperty Name="Calendars" Relationship="Self.FK__Calendar__userID__6CD828CA" FromRole="Users" ToRole="Calendar" />
+          <NavigationProperty Name="OfficeHours" Relationship="Self.FK__OfficeHou__userI__01D345B0" FromRole="Users" ToRole="OfficeHours" />
         </EntityType>
-        <Association Name="FK__Calendar__userID__58D1301D">
+        <Association Name="FK__Alerts__userID__72910220">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Alerts" Type="Self.Alert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Alerts">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Calendar__userID__6CD828CA">
           <End Role="Users" Type="Self.User" Multiplicity="0..1" />
           <End Role="Calendar" Type="Self.Calendar" Multiplicity="*" />
           <ReferentialConstraint>
@@ -198,7 +266,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Events__calendar__5BAD9CC8">
+        <Association Name="FK__Events__calendar__6FB49575">
           <End Role="Calendar" Type="Self.Calendar" Multiplicity="0..1" />
           <End Role="Events" Type="Self.Event" Multiplicity="*" />
           <ReferentialConstraint>
@@ -210,7 +278,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Messages__eventI__671F4F74">
+        <Association Name="FK__Messages__eventI__756D6ECB">
           <End Role="Events" Type="Self.Event" Multiplicity="0..1" />
           <End Role="Messages" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
@@ -222,57 +290,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="bucboardEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Calendars" EntityType="Self.Calendar" />
-          <EntitySet Name="Events" EntityType="Self.Event" />
-          <EntitySet Name="Messages" EntityType="Self.Message" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK__Calendar__userID__58D1301D" Association="Self.FK__Calendar__userID__58D1301D">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Calendar" EntitySet="Calendars" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Events__calendar__5BAD9CC8" Association="Self.FK__Events__calendar__5BAD9CC8">
-            <End Role="Calendar" EntitySet="Calendars" />
-            <End Role="Events" EntitySet="Events" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Messages__eventI__671F4F74" Association="Self.FK__Messages__eventI__671F4F74">
-            <End Role="Events" EntitySet="Events" />
-            <End Role="Messages" EntitySet="Messages" />
-          </AssociationSet>
-          <EntitySet Name="Alerts" EntityType="bucboardModel.Alert" />
-          <AssociationSet Name="FK__Alerts__userID__72910220" Association="bucboardModel.FK__Alerts__userID__72910220">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Alert" EntitySet="Alerts" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="Alert">
-          <Key>
-            <PropertyRef Name="alertID" />
-          </Key>
-          <Property Name="alertID" Type="Int32" Nullable="false" />
-          <Property Name="alertName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="isOn" Type="Int32" />
-          <Property Name="userID" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="bucboardModel.FK__Alerts__userID__72910220" FromRole="Alert" ToRole="User" />
-        </EntityType>
-        <Association Name="FK__Alerts__userID__72910220">
-          <End Type="bucboardModel.User" Role="User" Multiplicity="0..1" />
-          <End Type="bucboardModel.Alert" Role="Alert" Multiplicity="*" />
+        <Association Name="FK__OfficeHou__userI__01D345B0">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="OfficeHours" Type="Self.OfficeHour" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="User">
+            <Principal Role="Users">
               <PropertyRef Name="userID" />
             </Principal>
-            <Dependent Role="Alert">
+            <Dependent Role="OfficeHours">
               <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="bucboardEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Alerts" EntityType="Self.Alert" />
+          <EntitySet Name="Calendars" EntityType="Self.Calendar" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="OfficeHours" EntityType="Self.OfficeHour" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Alerts__userID__72910220" Association="Self.FK__Alerts__userID__72910220">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Alerts" EntitySet="Alerts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Calendar__userID__6CD828CA" Association="Self.FK__Calendar__userID__6CD828CA">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Calendar" EntitySet="Calendars" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Events__calendar__6FB49575" Association="Self.FK__Events__calendar__6FB49575">
+            <End Role="Calendar" EntitySet="Calendars" />
+            <End Role="Events" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Messages__eventI__756D6ECB" Association="Self.FK__Messages__eventI__756D6ECB">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OfficeHou__userI__01D345B0" Association="Self.FK__OfficeHou__userI__01D345B0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OfficeHours" EntitySet="OfficeHours" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="bucboardModelStoreContainer" CdmEntityContainer="bucboardEntities">
+        <EntityContainerMapping StorageEntityContainer="bucboardModelStoreContainer" CdmEntityContainer="bucboardEntities1">
+          <EntitySetMapping Name="Alerts">
+            <EntityTypeMapping TypeName="bucboardModel.Alert">
+              <MappingFragment StoreEntitySet="Alerts">
+                <ScalarProperty Name="alertID" ColumnName="alertID" />
+                <ScalarProperty Name="alertName" ColumnName="alertName" />
+                <ScalarProperty Name="isOn" ColumnName="isOn" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Calendars">
             <EntityTypeMapping TypeName="bucboardModel.Calendar">
               <MappingFragment StoreEntitySet="Calendar">
@@ -307,6 +380,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="OfficeHours">
+            <EntityTypeMapping TypeName="bucboardModel.OfficeHour">
+              <MappingFragment StoreEntitySet="OfficeHours">
+                <ScalarProperty Name="officeHoursID" ColumnName="officeHoursID" />
+                <ScalarProperty Name="startingHours" ColumnName="startingHours" />
+                <ScalarProperty Name="startingMinutes" ColumnName="startingMinutes" />
+                <ScalarProperty Name="endingHours" ColumnName="endingHours" />
+                <ScalarProperty Name="endingMinutes" ColumnName="endingMinutes" />
+                <ScalarProperty Name="day" ColumnName="day" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="bucboardModel.User">
               <MappingFragment StoreEntitySet="Users">
@@ -319,16 +405,6 @@
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="confirmPassword" ColumnName="confirmPassword" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Alerts">
-            <EntityTypeMapping TypeName="bucboardModel.Alert">
-              <MappingFragment StoreEntitySet="Alerts">
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="isOn" ColumnName="isOn" />
-                <ScalarProperty Name="alertName" ColumnName="alertName" />
-                <ScalarProperty Name="alertID" ColumnName="alertID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

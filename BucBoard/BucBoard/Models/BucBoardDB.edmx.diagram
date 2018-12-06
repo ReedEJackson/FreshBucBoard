@@ -4,16 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="9ebb68bed4704c10a0ac612baeba69b2" Name="Diagram1">
-        <EntityTypeShape EntityType="bucboardModel.Calendar" Width="1.5" PointX="3.125" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.Event" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.Message" Width="1.5" PointX="7.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="bucboardModel.User" Width="1.5" PointX="0.875" PointY="2.625" IsExpanded="true" />
-        <AssociationConnector Association="bucboardModel.FK__Calendar__userID__58D1301D" ManuallyRouted="false" />
-        <AssociationConnector Association="bucboardModel.FK__Events__calendar__5BAD9CC8" ManuallyRouted="false" />
-        <AssociationConnector Association="bucboardModel.FK__Messages__eventI__671F4F74" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="bucboardModel.Alert" Width="1.5" PointX="3" PointY="8.25" />
-        <AssociationConnector Association="bucboardModel.FK__Alerts__userID__72910220" />
+      <Diagram DiagramId="f7b90a9c0ea74293957d40f35908ac58" Name="Diagram1">
+        <EntityTypeShape EntityType="bucboardModel.Alert" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.Calendar" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.Event" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.Message" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.OfficeHour" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="bucboardModel.User" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="bucboardModel.FK__Alerts__userID__72910220" ManuallyRouted="false" />
+        <AssociationConnector Association="bucboardModel.FK__Calendar__userID__6CD828CA" ManuallyRouted="false" />
+        <AssociationConnector Association="bucboardModel.FK__Events__calendar__6FB49575" ManuallyRouted="false" />
+        <AssociationConnector Association="bucboardModel.FK__Messages__eventI__756D6ECB" ManuallyRouted="false" />
+        <AssociationConnector Association="bucboardModel.FK__OfficeHou__userI__01D345B0" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

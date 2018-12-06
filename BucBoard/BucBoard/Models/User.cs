@@ -17,8 +17,9 @@ namespace BucBoard.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Calendars = new HashSet<Calendar>();
             this.Alerts = new HashSet<Alert>();
+            this.Calendars = new HashSet<Calendar>();
+            this.OfficeHours = new HashSet<OfficeHour>();
         }
     
         public int userID { get; set; }
@@ -32,22 +33,10 @@ namespace BucBoard.Models
         public string confirmPassword { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Alert> Alerts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Calendar> Calendars { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Alert> Alerts { get; set; }
-
-        //public User(int id, string first, string last, int officeNum, string dept, int admin, 
-        //            string mail, string pass, string confirm)
-        //{
-        //    userID = id;
-        //    firstName = first;
-        //    lastName = last;
-        //    officeNumber = officeNum;
-        //    department = dept;
-        //    isAdmin = admin;
-        //    email = mail;
-        //    password = pass;
-        //    confirm = confirmPassword;
-        //}
+        public virtual ICollection<OfficeHour> OfficeHours { get; set; }
     }
 }

@@ -183,17 +183,24 @@
     <Compile Include="Models\Calendar.cs">
       <DependentUpon>BucBoardDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DayHours.cs" />
     <Compile Include="Models\Event.cs">
       <DependentUpon>BucBoardDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InOffice.cs" />
     <Compile Include="Models\Message.cs">
       <DependentUpon>BucBoardDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MultipleModelPass.cs" />
+    <Compile Include="Models\OfficeHour.cs">
+      <DependentUpon>BucBoardDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OfficeHourLocal.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>BucBoardDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserListModel.cs" />
+    <Compile Include="Models\WeekDay.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,8 +223,8 @@
     <Content Include="Images\Present.png" />
     <Content Include="Models\BucBoardDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>BucBoardDB.Context.cs</LastGenOutput>
       <DependentUpon>BucBoardDB.edmx</DependentUpon>
+      <LastGenOutput>BucBoardDB.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\BucBoardDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -264,6 +271,7 @@
     <Content Include="Views\BucLogin\BucLogin.cshtml" />
     <Content Include="Views\BucLogin\BucRegister.cshtml" />
     <Content Include="Views\Dashboard\Dashboard.cshtml" />
+    <Content Include="Views\Dashboard\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

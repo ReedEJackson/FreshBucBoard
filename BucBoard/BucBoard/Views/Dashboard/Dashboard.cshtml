@@ -211,27 +211,11 @@
     <div class="w3-container w3-center w3-animate-bottom">
         <h3>Edit Office Hours</h3>
         <br />
-        <div class="control">
-            <label for="appt-time">Monday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
-            <br />
-            <br />
-            <label for="appt-time">Tuesday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
-            <br />
-            <br />
-            <label for="appt-time">Wednesday:</label>&nbsp
-            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
-            <br />
-            <br />
-            <label for="appt-time">Thursday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp
-            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
-            <br />
-            <br />
-            <label for="appt-time">Friday:</label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-            <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" /> - <input type="time" id="appt-time" name="appt-time" min="9:00" max="18:00" required style="color: black" />
-
-
+        <div>
+            @*@Html.DropDownList("Days",
+                    new SelectList(Enum.GetValues(typeof(WeekDay))),
+                    "Select Weekday",
+                    new { @class = "form-control" })*@
         </div>
     </div>
 </div>
