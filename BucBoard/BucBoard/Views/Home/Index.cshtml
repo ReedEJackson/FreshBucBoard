@@ -141,10 +141,21 @@
 
 <!--Alerts-->
 @*@Html.Label("Alert");
-@Html.DisplayFor(m => m.eventID)*@
+    @Html.DisplayFor(m => m.eventID)*@
 
 <!--Calender-->
+<div id='calendar'>
+    <br />
+    <br />
+    <br />
+</div>
 
+<!--Alix's script-->
+<script>
+    function OpenAppointmentWindow() {
+        window.open("BucPointment");
+    }
+</script>
 
 <!--Buttons for navigating -->
 <div style="text-align: center;">
@@ -154,10 +165,33 @@
 </div>
 
 @section Scripts{
-    <!--Alix's script-->
+    <script src='~/Scripts/moment.min.js'></script>
+    <script src='~/Scripts/jquery-3.3.1.min.js'></script>
+    <script src='~/Scripts/fullcalendar.js'></script>
     <script>
-        function OpenAppointmentWindow() {
-            window.open("BucPointment");
-        }
+
+        $(document).ready(function () {
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,basicDay'
+                },
+                defaultView: 'agendaWeek',
+                defaultDate: '2018-12-3',
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: [
+                    {
+                        title: 'Department Meeting',
+                        start: '2018-12-03T12:00:00'
+                    }
+                ]
+            });
+
+        });
+
     </script>
 }

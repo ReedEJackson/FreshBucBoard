@@ -1,0 +1,217 @@
+﻿@using BucBoard.Models
+@model OfficeHourLocal
+<div class="row">
+    <div class="col">
+        @{
+            int maxCount = 0;
+            int[] count = { 0, 0, 0, 0, 0 };
+            string output = "";
+            int num = 0;
+        }
+        @for (int i = 0; i < 5; i++)
+        {
+            count[i] = Model.WeekDays[i].DayTimes.Count();
+            if (maxCount < count[i])
+            {
+                maxCount = count[i];
+            }
+        }
+        <table>
+            <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+            @for (int i = 0; i < maxCount; i++)
+            {
+                <tr>
+                    <th>
+                        @{
+                            output = "";
+                            num = 0;
+                        }
+                        @if (count[num] > i)
+                        {
+                            output = output + Model.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].StartMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].StartMin.ToString();
+                            }
+                            output = output + " - " + Model.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].EndMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].EndMin.ToString();
+                            }
+                        }
+                        @Html.Label(output)
+                    </th>
+                    <th>
+                        @{
+                            output = "";
+                            num = 1;
+                        }
+                        @if (count[num] > i)
+                        {
+                            output = output + Model.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].StartMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].StartMin.ToString();
+                            }
+                            output = output + " - " + Model.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].EndMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].EndMin.ToString();
+                            }
+                        }
+                        @Html.Label(output)
+                    </th>
+                    <th>
+                        @{
+                            output = "";
+                            num = 2;
+                        }
+                        @if (count[num] > i)
+                        {
+                            output = output + Model.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].StartMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].StartMin.ToString();
+                            }
+                            output = output + " - " + Model.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].EndMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].EndMin.ToString();
+                            }
+                        }
+                        @Html.Label(output)
+                    </th>
+                    <th>
+                        @{
+                            output = "";
+                            num = 3;
+                        }
+                        @if (count[num] > i)
+                        {
+                            output = output + Model.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].StartMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].StartMin.ToString();
+                            }
+                            output = output + " - " + Model.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].EndMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].EndMin.ToString();
+                            }
+                        }
+                        @Html.Label(output)
+                    </th>
+                    <th>
+                        @{
+                            output = "";
+                            num = 4;
+                        }
+                        @if (count[num] > i)
+                        {
+                            output = output + Model.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].StartMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].StartMin.ToString();
+                            }
+                            output = output + " - " + Model.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                            if (Model.WeekDays[num].DayTimes[i].EndMin == 0)
+                            {
+                                output += "00";
+                            }
+                            else
+                            {
+                                output += Model.WeekDays[num].DayTimes[i].EndMin.ToString();
+                            }
+                        }
+                        @Html.Label(output)
+                    </th>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Dashboard", "Dashboard", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="form-group">
+                        <div class="row">
+                            @Html.Label("Monday")
+                            <div class="col-md-3">
+                                @Html.Label("Start Hour")
+                                @Html.TextBoxFor(m => m.WeekDays[0].DayTimes[0].StartHourStr, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.WeekDays[0].DayTimes[0], "", new { @class = "text-danger" })
+                            </div>
+                            @Html.Label(":")
+                            <div class="col-md-3">
+                                @Html.Label("Start Minute")
+                                @Html.TextBoxFor(m => m.WeekDays[0].DayTimes[0].StartMinStr, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.WeekDays[0].DayTimes[0], "", new { @class = "text-danger" })
+                            </div>
+                            @Html.Label(" - ")
+                            <div class="col-md-3">
+                                @Html.Label("End Hour")
+                                @Html.TextBoxFor(m => m.WeekDays[0].DayTimes[0].EndHourStr, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.WeekDays[0].DayTimes[0], "", new { @class = "text-danger" })
+                            </div>
+                            @Html.Label(":")
+                            <div class="col-md-3">
+                                @Html.Label("End Minute")
+                                @Html.TextBoxFor(m => m.WeekDays[0].DayTimes[0].EndMinStr, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.WeekDays[0].DayTimes[0], "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Add Hours" class="btn btn-default" />
+                        </div>
+                    </div>
+                }
+            </section>
+        </div>
+    </div>
+</div>
+

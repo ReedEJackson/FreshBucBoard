@@ -22,7 +22,8 @@ namespace BucBoard.Models
     
         public int eventID { get; set; }
         public string eventName { get; set; }
-        public Nullable<System.DateTime> date { get; set; }
+        public string day { get; set; }
+        public string month { get; set; }
         public string startTime { get; set; }
         public string endTime { get; set; }
         public Nullable<int> calendarID { get; set; }

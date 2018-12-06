@@ -207,185 +207,457 @@
     </div>
 </div>
 
-<div id="OfficeHours" class="tabcontent">
+
+@*<div id="OfficeHours" class="tabcontent">
     <div class="w3-container w3-center w3-animate-bottom">
         <h3>Edit Office Hours</h3>
         <br />
-        <div>
-            @*@Html.DropDownList("Days",
-                    new SelectList(Enum.GetValues(typeof(WeekDay))),
-                    "Select Weekday",
-                    new { @class = "form-control" })*@
-        </div>
+        @{ 
+            OfficeHourLocal mod = new OfficeHourLocal(Model.MyOfficeHourLocal);
+        }
+        @Html.Action("_BucOfficeHours", "Dashboard", new { m = mod})
     </div>
-</div>
+</div>*@
+        <div id="OfficeHours" class="tabcontent">
+            <div class="w3-container w3-center w3-animate-bottom">
+                <h3>Edit Office Hours</h3>
+                <br />
+                <div class="row">
+                    <div class="col">
+                        @{
+                            int maxCount = 0;
+                            int[] count = {0, 0, 0, 0, 0};
+                            string output = "";
+                            int num = 0;
+                        }
+                        @for (int i = 0; i < 5; i++)
+                        {
+                            count[i] = Model.MyOfficeHourLocal.WeekDays[i].DayTimes.Count();
+                            if (maxCount < count[i])
+                            {
+                                maxCount = count[i];
+                            }
+                        }
+                        <table>
+                            <tr>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                            </tr>
+                            @for (int i = 0; i < maxCount; i++)
+                            {
+                                <tr>
+                                    <th>
+                                        @{
+                                            output = "";
+                                            num = 0;
+                                        }
+                                        @if (count[num] > i)
+                                        {
+                                            output = output + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin.ToString();
+                                            }
+                                            output = output + " - " + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin.ToString();
+                                            }
+                                        }
+                                        @Html.Label(output)
+                                    </th>
+                                    <th>
+                                        @{
+                                            output = "";
+                                            num = 1;
+                                        }
+                                        @if (count[num] > i)
+                                        {
+                                            output = output + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin.ToString();
+                                            }
+                                            output = output + " - " + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin.ToString();
+                                            }
+                                        }
+                                        @Html.Label(output)
+                                    </th>
+                                    <th>
+                                        @{
+                                            output = "";
+                                            num = 2;
+                                        }
+                                        @if (count[num] > i)
+                                        {
+                                            output = output + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin.ToString();
+                                            }
+                                            output = output + " - " + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin.ToString();
+                                            }
+                                        }
+                                        @Html.Label(output)
+                                    </th>
+                                    <th>
+                                        @{
+                                            output = "";
+                                            num = 3;
+                                        }
+                                        @if (count[num] > i)
+                                        {
+                                            output = output + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin.ToString();
+                                            }
+                                            output = output + " - " + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin.ToString();
+                                            }
+                                        }
+                                        @Html.Label(output)
+                                    </th>
+                                    <th>
+                                        @{
+                                            output = "";
+                                            num = 4;
+                                        }
+                                        @if (count[num] > i)
+                                        {
+                                            output = output + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].StartMin.ToString();
+                                            }
+                                            output = output + " - " + Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndHour.ToString() + ":";
+                                            if (Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin == 0)
+                                            {
+                                                output += "00";
+                                            }
+                                            else
+                                            {
+                                                output += Model.MyOfficeHourLocal.WeekDays[num].DayTimes[i].EndMin.ToString();
+                                            }
+                                        }
+                                        @Html.Label(output)
+                                    </th>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="col">
+                        <div class="col-md-8">
+                                <section id="loginForm">
+                                    @using (Html.BeginForm("Dashboard", "Dashboard", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                    {
+                                        <div class="row">
+                                            <div class="form-group">
+                                                @Html.Label("Monday")
+                                                <div class="col-md-6">
+                                                    @Html.Label("Start Hour")
+                                                    @Html.TextBoxFor(m => m.MyDayHours.DayTimes[0].StartHourStr, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.MyDayHours.DayTimes[0], "", new { @class = "text-danger" })
+                                                </div>
+                                                @Html.Label(":")
+                                                <div class="col-md-6">
+                                                    @Html.Label("Start Minute")
+                                                    @Html.TextBoxFor(m => m.MyDayHours.DayTimes[0].StartMinStr, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.MyDayHours.DayTimes[0], "", new { @class = "text-danger" })
+                                                </div>
+                                                @Html.Label(" - ")
+                                                <div class="col-md-6">
+                                                    @Html.Label("End Hour")
+                                                    @Html.TextBoxFor(m => m.MyDayHours.DayTimes[0].EndHourStr, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.MyDayHours.DayTimes[0], "", new { @class = "text-danger" })
+                                                </div>
+                                                @Html.Label(":")
+                                                <div class="col-md-6">
+                                                    @Html.Label("End Minute")
+                                                    @Html.TextBoxFor(m => m.MyDayHours.DayTimes[0].EndMinStr, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.MyDayHours.DayTimes[0], "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input type="submit" value="Add Hours" class="btn btn-default" />
+                                            </div>
+                                        </div>
+                                        
+                                    }
+                                </section>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
 
-<div id="Profile" class="tabcontent">
-    <div class="w3-container w3-center w3-animate-bottom">
+        <div id="Profile" class="tabcontent">
+            <div class="w3-container w3-center w3-animate-bottom">
+                <div class="container">
+                    <h1>Edit Profile</h1>
+                    <hr>
+                    <div class="row">
+        <!-- left column -->
+        <div class="col-md-3">
+            <div class="text-center">
+                <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
+                <h6>Upload photo...</h6>
 
+                <input type="file" class="form-control">
+            </div>
+        </div>
 
-        <div class="container">
-            <h1>Edit Profile</h1>
-            <hr>
-            <div class="row">
-                <!-- left column -->
-                <div class="col-md-3">
-                    <div class="text-center">
-                        <img src="//placehold.it/100" class="avatar img-circle" alt="avatar">
-                        <h6>Upload photo...</h6>
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
 
-                        <input type="file" class="form-control">
+            <h3>Personal info</h3>
+
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="Jane">
                     </div>
                 </div>
-
-                <!-- edit form column -->
-                <div class="col-md-9 personal-info">
-
-                    <h3>Personal info</h3>
-
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">First name:</label>
-                            <div class="col-lg-8">
-                                <input class="form-control" type="text" value="Jane">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Last name:</label>
-                            <div class="col-lg-8">
-                                <input class="form-control" type="text" value="Bishop">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Company:</label>
-                            <div class="col-lg-8">
-                                <input class="form-control" type="text" value="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Email:</label>
-                            <div class="col-lg-8">
-                                <input class="form-control" type="text" value="janesemail@gmail.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">Time Zone:</label>
-                            <div class="col-lg-8">
-                                <div class="ui-select">
-                                    <select id="user_time_zone" class="form-control">
-                                        <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                        <option value="Alaska">(GMT-09:00) Alaska</option>
-                                        <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                        <option value="Arizona">(GMT-07:00) Arizona</option>
-                                        <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                        <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                        <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                        <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Username:</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="text" value="janeuser">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Password:</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="password" value="11111122333">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Confirm password:</label>
-                            <div class="col-md-8">
-                                <input class="form-control" type="password" value="11111122333">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label"></label>
-                            <div class="col-md-8">
-                                <input type="button" class="btn btn-primary" value="Save Changes">
-                                <span></span>
-                                <input type="reset" class="btn btn-default" value="Cancel">
-                            </div>
-                        </div>
-                    </form>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="Bishop">
+                    </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Company:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" type="text" value="janesemail@gmail.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Time Zone:</label>
+                    <div class="col-lg-8">
+                        <div class="ui-select">
+                            <select id="user_time_zone" class="form-control">
+                                <option value="Hawaii">(GMT-10:00) Hawaii</option>
+                                <option value="Alaska">(GMT-09:00) Alaska</option>
+                                <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+                                <option value="Arizona">(GMT-07:00) Arizona</option>
+                                <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
+                                <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
+                                <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
+                                <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Username:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="text" value="janeuser">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Password:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="password" value="11111122333">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Confirm password:</label>
+                    <div class="col-md-8">
+                        <input class="form-control" type="password" value="11111122333">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input type="button" class="btn btn-primary" value="Save Changes">
+                        <span></span>
+                        <input type="reset" class="btn btn-default" value="Cancel">
+                    </div>
+                </div>
+            </form>
+        </div>
+                    </div>
+                </div>
+        <hr>
             </div>
         </div>
-        <hr>
-    </div>
-</div>
 
-<div id="Alerts" class="tabcontent">
-    <div class="w3-container w3-center w3-animate-bottom">
-        <h2>Choose Alert</h2>
-        <br />
-        <h3>Lunch Break: </h3>
-        <label class="switch">
-            <input type="checkbox">
-            <span class="slider round"></span>
-        </label>
-        <br />
-        <br />
-        <h3>Away From Office: </h3>
-        <label class="switch">
-            <input type="checkbox">
-            <span class="slider round"></span>
-        </label>
-        <br />
+        <div id="Alerts" class="tabcontent">
+            <div class="w3-container w3-center w3-animate-bottom">
+                <h2>Choose Alert</h2>
+                <br />
+                <h3>Lunch Break: </h3>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <br />
+                <br />
+                <h3>Away From Office: </h3>
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                </label>
+                <br />
 
-    </div>
-</div>
+            </div>
+        </div>
 
-<div class="row">
-    <div class="col">
-        <a onclick="present()">
-            <img src="~/Images/Present.png" width="40%" height="100%" class="buttonPress" align="middle" />
-        </a>
-    </div>
-
-
-    <div class="col">
-        @if (Model.MyUser.isAdmin == 1)
-        {
-            <div>
-                <a href="@Url.Action("Manage", "Dashboard")">
-                    <img src="~/Images/ManageUsers.png" width="40%" height="70%" class="buttonPress" align="right" />
+        <div class="row">
+            <div class="col">
+                <a onclick="present()">
+                    <img src="~/Images/Present.png" width="40%" height="100%" class="buttonPress" align="middle" />
                 </a>
             </div>
+
+
+            <div class="col">
+                @if (Model.MyUser.isAdmin == 1 && Model.MyUser.isAdmin != null)
+                {
+                    <div>
+                        <a href="@Url.Action("BucRegister", "BucLogin")">
+                            <img src="~/Images/ManageUsers.png" width="40%" height="70%" class="buttonPress" align="right" />
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <br />
+
+
+        @section Scripts{
+            <script>
+        function displayDayHours() {
+            var val = document.getElementById("OfficeHourDropDown");
+            var opt = val.options[val.selectedIndex].value;
+            var dayModel;
+            switch (opt) {
+                case "1":
+                    dayModel = @Model.MyOfficeHourLocal.WeekDays[1];
+                    displayDays(dayModel, WeekDayContainer);
+                    break;
+                case "2":
+                    dayModel = @Model.MyOfficeHourLocal.WeekDays[1];
+                    displayDays(dayModel, WeekDayContainer);
+                    break;
+                case "3":
+                    dayModel = @Model.MyOfficeHourLocal.WeekDays[1];
+                    displayDays(dayModel, WeekDayContainer);
+                    break;
+                case "4":
+                    dayModel = @Model.MyOfficeHourLocal.WeekDays[1];
+                    displayDays(dayModel, WeekDayContainer);
+                    break;
+                case "5":
+                    dayModel = @Model.MyOfficeHourLocal.WeekDays[1];
+                    displayDays(dayModel, WeekDayContainer);
+                    break;
+                default:
+                    alert("Select a day plz!!");
+                    break;
+            }
         }
-    </div>
-</div>
+        function displayDays(dayModel, id) {
+            var output = "";
+            for (var i = 0; i < dayModel.DayTimes.Count(); i++) {
+                output = output + dayModel.DayTimes[i].StartHour.ToString() + ":";
+                if (dayModel.DayTimes[i].StartMin == 0) {
+                    output += "00";
+                }
+                else {
+                    output += dayModel.DayTimes[i].StartMin.ToString();
+                }
+                output = output + " - " + dayModel.DayTimes[i].EndHour.ToString() + ":";
+                if (dayModel.DayTimes[i].EndMin == 0) {
+                    output += "00";
+                }
+                else {
+                    output += dayModel.DayTimes[i].EndMin.ToString();
+                }
+            }
+            document.getElementById(id).innerHTML = output + <br />;
+        }
+            </script>
 
-<br />
-
-
-@section Scripts{
-    <script>
+            <script>
         function present() {
             window.open("@Url.Action("Index", "Home")");
             window.close("@Url.Action("Dashboard", "Dashboard")");
         }
-    </script>
-    <script>
-        function openPage(pageName, elmnt, color) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablink");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].style.backgroundColor = "";
-            }
-            document.getElementById(pageName).style.display = "block";
-            elmnt.style.backgroundColor = color;
+            </script>
 
+            <script>
+                function openPage(pageName, elmnt, color) {
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablink");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].style.backgroundColor = "";
+                    }
+                    document.getElementById(pageName).style.display = "block";
+                    elmnt.style.backgroundColor = color;
+
+                }
+                // Get the element with id="defaultOpen" and click on it
+                document.getElementById("defaultOpen").click();
+            </script>
         }
-        // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
-    </script>
-}

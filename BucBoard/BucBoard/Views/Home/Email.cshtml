@@ -1,0 +1,53 @@
+﻿<style>
+    textarea {
+        color: #000000;
+    }
+</style>
+
+@model BucBoard.Models.SendEmailModel
+@{
+    ViewBag.Title = "Bucmail";
+    Layout = "~/Views/Shared/Popup.cshtml";
+
+    List<SelectListItem> Options = new List<SelectListItem>();
+    Options.Add(new SelectListItem { Text = "Need an appointment", Value = "Needs an appointment" });
+    Options.Add(new SelectListItem { Text = "Need help with assignment", Value = "Need help with assignment" });
+    Options.Add(new SelectListItem { Text = "Missed you in office", Value = "Missed you in office" });
+    Options.Add(new SelectListItem { Text = "Other", Value = "Other" });
+}
+
+<div class="text-center">
+    <h2>@ViewBag.Message</h2>
+    @using (Html.BeginForm("SendEmailView", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <label for="email"> ETSU E-mail: </label>
+        <br />
+        <div align="center">
+            @Html.EditorFor(model => model.Sender, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Sender, "", new { @class = "text-danger" })
+        </div>
+        <br />
+        <div align="center">
+            @Html.DropDownListFor(model => model.Subject, Options)
+        </div>
+        <br />
+        <label for="textarea"> Please type a brief message </label>
+        <br />
+        <div align="center">
+            @Html.EditorFor(model => model.Body, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+        </div>
+        <br />
+        <button type="submit" class="btn btn-default">Submit!</button>
+    }
+</div>
+
+        <script>
+            function CloseWindow() {
+                window.close()
+            }
+        </script>
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

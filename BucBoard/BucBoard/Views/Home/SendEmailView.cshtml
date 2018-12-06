@@ -1,0 +1,33 @@
+﻿@{
+    try
+    {
+        string Sender = "DefNotABot11@gmail.com", Sub, EBody;
+
+        string ToEmail = "jacksonre@etsu.edu";
+        Sub = Request["Subject"].ToString();
+        EBody = Request["Body"].ToString();
+
+        WebMail.SmtpServer = "smtp.gmail.com"; //gmail smtp server
+        WebMail.SmtpPort = 587; //gmail port to send emails
+        WebMail.SmtpUseDefaultCredentials = true;
+        WebMail.EnableSsl = true; //sending emails with secure protocol
+        WebMail.UserName = Sender;//EmailId used to send emails from application
+        WebMail.Password = "DefNotABot";
+        WebMail.From = Sender; //email sender email address.
+
+        WebMail.Send(to: ToEmail, subject: Sub, body: EBody, isBodyHtml: true);
+
+
+
+
+        <div class="text-success">
+            Email Sent Successfully.
+        </div>
+    }
+    catch (Exception e)
+    {
+        <div class="text-success">
+            Didn't work :[
+        </div>
+    }
+}

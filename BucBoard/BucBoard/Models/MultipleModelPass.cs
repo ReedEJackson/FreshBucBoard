@@ -17,7 +17,7 @@ namespace BucBoard.Models
         //Custom models
         public UserListModel MyUserListModel { get; set; }
         public WeekDay MyWeekDay { get; set; }
-        public OfficeHourLocal MyOfficeHours { get; set; }
+        public OfficeHourLocal MyOfficeHourLocal { get; set; }
         public DayHours MyDayHours { get; set; }
         public InOffice MyInOffice { get; set; }
 

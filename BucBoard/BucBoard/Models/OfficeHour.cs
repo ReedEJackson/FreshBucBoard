@@ -21,6 +21,7 @@ namespace BucBoard.Models
         public Nullable<int> endingMinutes { get; set; }
         public string day { get; set; }
         public int userID { get; set; }
+        public Nullable<int> isAvailable { get; set; }
     
         public virtual User User { get; set; }
     }

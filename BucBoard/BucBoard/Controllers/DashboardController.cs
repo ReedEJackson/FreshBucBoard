@@ -14,62 +14,233 @@ namespace BucBoard.Controllers
         // GET: Dashboard
         public ActionResult Dashboard()
         {
+            MultipleModelPass model = new MultipleModelPass();
+
             #region Get office hours
 
-            OfficeHourLocal MyOfficeHours = new OfficeHourLocal();
+            OfficeHourLocal MyOfficeHours = new OfficeHourLocal(true);
             InOffice tempTime;
+            string query = "SELECT * FROM OfficeHours WHERE userID = " + BucGlobal.BucCurrentUser + " AND day = '";
 
             string connectionString = @"Data Source=bucboard.database.windows.net;Initial Catalog=bucboard;User ID=bucboard;Password=se2fall2018!;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             SqlConnection connection = new SqlConnection(connectionString);
             using (SqlCommand command = new SqlCommand(""))
             {
-                int x;
                 command.Connection = connection;
                 connection.Open();
 
-                command.CommandText = "SELECT * FROM OfficeHours WHERE userID = 1 AND day = 'Monday'";
+                #region Monday
+
+                command.CommandText = query + "Monday'";
                 SqlDataAdapter adapter = new SqlDataAdapter(command);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 foreach (DataRow col in table.Rows)
                 {
-                    tempTime = new InOffice((int)col[1], (int)col[2], )
-                    MyOfficeHours.WeekDays[0].DayTimes.Add();
-                    //Start time
-                    x = (int)col[1];
-                    x = (int)col[3];
-
-                    //End time
-                    x = (int)col[2];
-                    x = (int)col[4];
+                    tempTime = new InOffice((int)col[1], (int)col[2], (int)col[3], (int)col[4]);
+                    MyOfficeHours.WeekDays[0].DayTimes.Add(tempTime);
                 }
 
+                #endregion
+
+                #region Tuesday
+
+                command.CommandText = query + "Tuesday'";
+                adapter = new SqlDataAdapter(command);
+                table = new DataTable();
+                adapter.Fill(table);
+                foreach (DataRow col in table.Rows)
+                {
+                    tempTime = new InOffice((int)col[1], (int)col[2], (int)col[3], (int)col[4]);
+                    MyOfficeHours.WeekDays[1].DayTimes.Add(tempTime);
+                }
+
+                #endregion
+
+                #region Wednesday
+
+                command.CommandText = query + "Wednesday'";
+                adapter = new SqlDataAdapter(command);
+                table = new DataTable();
+                adapter.Fill(table);
+                foreach (DataRow col in table.Rows)
+                {
+                    tempTime = new InOffice((int)col[1], (int)col[2], (int)col[3], (int)col[4]);
+                    MyOfficeHours.WeekDays[2].DayTimes.Add(tempTime);
+                }
+
+                #endregion
+
+                #region Thursday
+
+                command.CommandText = query + "Thursday'";
+                adapter = new SqlDataAdapter(command);
+                table = new DataTable();
+                adapter.Fill(table);
+                foreach (DataRow col in table.Rows)
+                {
+                    tempTime = new InOffice((int)col[1], (int)col[2], (int)col[3], (int)col[4]);
+                    MyOfficeHours.WeekDays[3].DayTimes.Add(tempTime);
+                }
+
+                #endregion
+
+                #region Friday
+
+                command.CommandText = query + "Friday'";
+                adapter = new SqlDataAdapter(command);
+                table = new DataTable();
+                adapter.Fill(table);
+                foreach (DataRow col in table.Rows)
+                {
+                    tempTime = new InOffice((int)col[1], (int)col[2], (int)col[3], (int)col[4]);
+                    MyOfficeHours.WeekDays[4].DayTimes.Add(tempTime);
+                }
+
+                #endregion
+
                 connection.Close();
-            } 
+            }
+            //Sort times
+            for (int i = 0; i < MyOfficeHours.WeekDays.Length; i++)
+            {
+                MyOfficeHours.WeekDays[i].SortList();
+            }
 
             #endregion
 
-            MultipleModelPass model = new MultipleModelPass();
+            model.MyOfficeHourLocal = MyOfficeHours;
+
             User tempUser = new Models.User();
             using (bucboardEntities db = new bucboardEntities())
             {
                 //Get current user
                 tempUser = CreateUser(BucGlobal.BucCurrentUser);
                 model.MyUser = tempUser;
-
-                //Get office days
-                var officeDay = db.OfficeHours.Where(u => u.userID == BucGlobal.BucCurrentUser).FirstOrDefault();
-
-                for (int i = 0; i < 5; i++)
-                {
-                    
-                }
-                //Get office times
-                //Get office time values
-
             }
             model.MyWeekDay = new WeekDay();
+            model.MyDayHours = new DayHours(false);
             return View(model);
+        }
+
+        public ActionResult _BucOfficeHours(OfficeHourLocal bucInput)
+        {
+            if (ModelState.IsValid)
+            {
+
+                if (bucInput != null && bucInput.WeekDays != null)
+                {
+                    using (bucboardEntities db = new bucboardEntities())
+                    {
+                        OfficeHour newOfficeHour = new OfficeHour();
+                        bool saveProgress = false;
+                        for (int i = 0; i < 1; i++)
+                        {
+                            InOffice temp = new InOffice();
+                            temp.StartHour = ValidateHour(bucInput.WeekDays[i].DayTimes[i].StartHourStr);
+                            temp.StartMin = ValidateMin(bucInput.WeekDays[i].DayTimes[i].StartMinStr);
+                            temp.EndHour = ValidateHour(bucInput.WeekDays[i].DayTimes[i].EndHourStr);
+                            temp.EndMin = ValidateMin(bucInput.WeekDays[i].DayTimes[i].EndMinStr);
+                            if (temp.StartHour == -1 ||
+                                temp.StartMin == -1 ||
+                                temp.EndHour == -1 ||
+                                temp.EndMin == -1)
+                            {
+                                ModelState.AddModelError("", "Make sure your values are in the ##:## - ##:## format.");
+                            }
+                            else if (false)
+                            {
+                                //bucInput.MyDayHours.AddNewTime(temp)
+                                ModelState.AddModelError("", "Make sure your time is not conflicting with other times.");
+                            }
+                            else
+                            {
+                                bucInput.WeekDays[i].DayTimes.Add(temp);
+                                newOfficeHour.startingHours = temp.StartHour;
+                                newOfficeHour.startingMinutes = temp.StartMin;
+                                newOfficeHour.endingHours = temp.EndHour;
+                                newOfficeHour.endingMinutes = temp.EndMin;
+                                switch (i)
+                                {
+                                    case 0:
+                                        newOfficeHour.day = "Monday";
+                                        break;
+                                    case 1:
+                                        newOfficeHour.day = "Tuesday";
+                                        break;
+                                    case 2:
+                                        newOfficeHour.day = "Wednesday";
+                                        break;
+                                    case 3:
+                                        newOfficeHour.day = "Thursday";
+                                        break;
+                                    case 4:
+                                        newOfficeHour.day = "Friday";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                newOfficeHour.userID = BucGlobal.BucCurrentUser;
+                                saveProgress = true;
+                            }
+                        }
+                        if (saveProgress)
+                        {
+                            db.SaveChanges();
+                        }
+                    }  
+                }
+                else
+                {
+                    return PartialView();
+                }
+            }
+            ModelState.Clear();
+            return PartialView(bucInput);
+        }
+
+        public int ValidateHour(string str)
+        {
+            int hr;
+            try
+            {
+                hr = Convert.ToInt32(str);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+
+            if (hr >= 0 && hr <= 24)
+            {
+                return hr;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        public int ValidateMin(string str)
+        {
+            int min;
+            try
+            {
+                min = Convert.ToInt32(str);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+
+            if (min >= 0 && min <= 60)
+            {
+                return min;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         public ActionResult Manage()

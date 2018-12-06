@@ -32,13 +32,67 @@ namespace BucBoard.Controllers
             {
                 using (bucboardEntities db = new bucboardEntities())
                 {
+                    //Add user
+                    bucUser.userID = 20;
                     db.Users.Add(bucUser);
-                    Calendar schedule = new Calendar();
-                    db.Calendars.Add(schedule);
+
+                    //Add Calendar
+                    //Calendar schedule = new Calendar();
+                    //db.Calendars.Add(schedule);
+
+                    #region Add Office Hours
+
+                    //OfficeHour officeHRS = new OfficeHour();
+
+                    //officeHRS.day = "Monday";
+                    //officeHRS.officeHoursID = 1;
+                    //db.OfficeHours.Add(officeHRS);
+
+                    //officeHRS.day = "Tuesday";
+                    //officeHRS.officeHoursID = 2;
+                    //db.OfficeHours.Add(officeHRS);
+
+                    //officeHRS.day = "Wednesday";
+                    //officeHRS.officeHoursID = 3;
+                    //db.OfficeHours.Add(officeHRS);
+
+                    //officeHRS.day = "Thursday";
+                    //officeHRS.officeHoursID = 4;
+                    //db.OfficeHours.Add(officeHRS);
+
+                    //officeHRS.day = "Friday";
+                    //officeHRS.officeHoursID = 5;
+                    //db.OfficeHours.Add(officeHRS);
+
+                    #endregion
+
+                    #region Add Alerts
+
+                    //Alert myAlert = new Alert();
+
+                    //myAlert.alertID = 1;
+                    //myAlert.alertName = "Gone to lunch";
+                    //myAlert.isOn = 0;
+                    //db.Alerts.Add(myAlert);
+
+                    //myAlert.alertID = 2;
+                    //myAlert.alertName = "Out of Office";
+                    //myAlert.isOn = 0;
+                    //db.Alerts.Add(myAlert);
+
+                    //myAlert.alertID = 3;
+                    //myAlert.alertName = "";
+                    //myAlert.isOn = 0;
+                    //db.Alerts.Add(myAlert); 
+
+                    #endregion
+
+                    //Save Changes to finalize registration
                     db.SaveChanges();
                 }
                 ModelState.Clear();
                 ViewBag.Message = bucUser.firstName + " " + bucUser.lastName + " was successfully created!";
+                return RedirectToAction("Dashboard", "Dashboard");
             }
             return View();
         }
